@@ -1,0 +1,257 @@
+
+{% extends 'base.html' %}
+<!-- products.html -->
+{% block title %}
+{{product.name}}
+{% endblock %}
+
+{% block style %}
+
+
+<style>
+
+.product-stars {
+    color: #FFA500;
+  }
+
+#container1 {
+  
+  margin: auto;
+  height: 150vh;
+  margin-top: 5%;
+  background: white;
+  box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
+}
+
+.left, .right {
+  width: 50%;
+  padding: 30px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex1 {
+  display: flex;
+}
+
+.main_image {
+  width: auto;
+  height: auto;
+}
+
+.option img {
+  width: 75px;
+  height: 75px;
+  padding: 10px;
+}
+
+.right {
+  padding: 50px 100px 50px 50px;
+}
+
+h3 {
+  color: #1f07fa;
+  margin: 10px 0 5px 0;
+  font-size: 25px;
+}
+
+h5,
+p,
+small {
+  color: #837D7C;
+}
+
+h4 {
+  color: red;
+}
+
+p {
+  margin: 20px 0 50px 0;
+  line-height: 25px;
+}
+
+h5 {
+  font-size: 15px;
+}
+
+
+#button1 {
+  width: 40%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  background: #C1908B;
+  color: white;
+  margin-top: 10px;
+  border-radius: 30px;
+}
+
+@media only screen and (max-width:768px) {
+  #container1 {
+    max-width: 90%;
+    margin: auto;
+    height: auto;
+  }
+
+  .left, .right {
+    width: 100%;
+  }
+
+  .container {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width:511px) {
+  .container1 {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+
+  .left, .right {
+    padding: 0;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .option {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+    </style>
+{% endblock %}
+
+
+{% block content %}
+
+{% load cart %}
+
+  
+    <section style="margin-top: 100px;" id="{{product.id}}" >
+      <div class="container flex" id="#container1" >
+        <div class="left">
+          <div class="main_image">
+            <img src="{{product.image.url}}" class="slide">
+          </div>
+          <div class="option flex">
+            <img src="{{product.image.url}}" onclick="img('{{product.image.url}}')">
+            <img src="{{product.image1.url}}" onclick="img('{{product.image1.url}}')">
+            <img src="{{product.image2.url}}" onclick="img('{{product.image2.url}}')">
+            <img src="{{product.image3.url}}" onclick="img('{{product.image3.url}}')">
+          </div>
+        </div>
+        
+        <div class="right">
+          <h3>{{product.name}}</h3>
+          
+          <h3> <img style="width: 60px;margin-right: 5px;" src="{{product.brand.image.url}}" alt=""><small>&#8377;</small>{{product.price}}  <small>&#8377;</small><strike style="color: gray;">{{product.sprice}}</strike></h3>
+          <div class="review">
+            <p>({{product.rate}}) <span class="product-stars" style="font-size: 22px;">★</span></p>
+            </div>
+       
+          <h3 style="color: #000;">Features :</h3> 
+          <ul style="margin-left: 50px;">
+            <li>{{product.f1}}</li>
+            <li>{{product.f2}}</li>
+            <li>{{product.f3}}</li>
+            <li>{{product.f4}}</li>
+            <li>{{product.f5}}</li>
+          </ul>
+          <p>Quantity Available: {{ product.quantity }}</p>
+          <div class="card-footer p-0 no-gutters">
+
+						{% if product|is_in_cart:request.session.cart %}
+						<div class="row no-gutters">
+							<form action="/#{{product.id}}" class="col-2 " method="post">
+								{% csrf_token %}
+								<input hidden type="text" name='product' value='{{product.id}}'>
+								<input hidden type="text" name='remove' value='True'>
+								<input type="submit" value=" - " class="btn btn-block btn-light border-right">
+							</form>
+							<div class="text-center col"> {{product|cart_quantity:request.session.cart}} in Cart</div>
+							<form action="/#{{product.id}}" class="col-2 " method="post">
+								{% csrf_token %}
+								<input hidden type="text" name='product' value='{{product.id}}'>
+								<input type="submit" value=" + " class="btn btn-block btn-info border-left">
+							</form>
+						</div>
+						{% else %}
+                {% if request.session.customer %}
+                 {% csrf_token %}
+              
+                  <form action="/#{{product.id}}" method="POST" class="btn-block">
+                    {% csrf_token %}
+                    <input hidden type="text" name='product' value='{{product.id}}'>
+                    <input type="submit" class="float-right btn btn-info  form-control"
+                      value="Add To Cart">
+                  </form>
+                  {% else %}
+                    <div class="div">
+            
+                      {% csrf_token %}
+                    
+                      <a href="/login" style="margin-left: 20%; border: none;" >
+                        <button type="button" style="padding: 1% 25% 1% 25%;" class="btn btn-primary">Login</button></a>
+                    </div>
+                {% endif %}
+  
+
+             {% endif %}
+
+					</div>
+
+          <!--<form action="/" method="post">
+            {% csrf_token %}
+            <label for="quantity">Quantity:</label>
+            <input type="number" name="quantity" value="1" min="1">
+            <button type="submit">Add to Cart</button>
+    
+            </form>
+    
+            <form action="/#{{product.id}}" method="POST" class="btn-block">
+							{% csrf_token %}
+							<input hidden type="text" name='product' value='{{product.id}}'>
+							<input type="submit" class="float-right btn btn-light  form-control"
+								value="Add To Cart">
+						</form>
+					-->
+        <h3 style="color: #000;">Description :</h3>
+           <p style="display: flex;font-size:medium;">{{product.description}}</p>
+         
+        </div>
+      </div>
+    </section>
+    <script>
+      function img(anything) {
+        document.querySelector('.slide').src = anything;
+      }
+  
+      function change(change) {
+        const line = document.querySelector('.home');
+        line.style.background = change;
+      }
+
+      setTimeout(function() {
+                    window.location.reload(); // Refresh the page after a delay
+                }, 9500); 
+    </script>
+  
+  {% endblock %}
+  
+  
+  {% include "footer.html" %}
+
+{% block footer %}
+
+{% endblock %}
+
+
+

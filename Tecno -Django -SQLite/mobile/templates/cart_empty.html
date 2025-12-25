@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+<!-- products.html -->
+{% block title %}
+Empty Cart
+{% endblock %}
+
+{% block style %}
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .empty-cart-img {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+
+        #containerss img:hover{
+            background-color: #0579f5;
+            box-shadow: 0 0 20px rgb(2, 252, 14);
+           }
+
+        #containerss a {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+       #containerss a:hover{
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+     {% load static %}
+    <div class="container" id="containerss">
+        <h1>Your Cart Is Empty
+        </h1>
+        <img class="empty-cart-img" src="{% static 'cart.jpg' %}" style="border-radius: 170% ; border: 1px dashed red; " alt="Empty Cart">
+       <br> <a href="/">Start Shopping</a>
+    </div>
+{% endblock %}
+
+
+
+
+{% include "footer.html" %}
+
+{% block footer %}
+
+{% endblock %}

@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+
+<title> {% block title %}
+    Search "{{ query }}"
+    {% endblock %}</title>
+
+
+{% block style %}
+<style>
+    #container_s {
+        border-radius: 2%;
+        display: flex;
+        text-align: center;
+        padding: 1% 0 15px 0;
+        margin: 2% 10% -1% 20%;
+
+    }
+
+
+    #container_s .product-image img {
+        height: 230px;
+        width: auto;
+        margin-right: 70px;
+        margin-left: 20px;
+        border: 1px solid rgb(9, 165, 238);
+    }
+
+    .product-detail {
+        max-width: 43%;
+        padding-left: 0px;
+        padding-right: 12px;
+    
+
+
+    }
+
+    .product-detail p {
+        overflow-y: scroll;
+        height: 100px;
+        margin-top: 2%;
+
+
+
+    }
+
+    .product-detail .contol {
+        margin-left: 2%;
+        height: 3%;
+        border: 2px solid red;
+        border-radius: 12%;
+        background-color: #1a66ff;
+
+    }
+
+    .btn {
+        cursor: pointer;
+        border: 2px solid rgb(245, 100, 4);
+        background: #809fff;
+        border-radius: 5px;
+        transform: translateY(0px);
+        transition: 0.3s linear;
+        padding: 0;
+        margin: 0;
+
+
+    }
+
+    .btn:hover {
+        transform: translateY(10px);
+        background: #1fb112;
+    }
+
+    .btn span {
+        transition: transform 0.5s;
+
+    }
+
+    .btn .price {
+        transform: translateX(-100%);
+    }
+
+    .btn .price,
+    .shopping-cart {
+        color: #1a66ff;
+        font-size: 20px;
+        text-align: center;
+        color: #07ee13;
+
+    }
+
+    .btn .shopping-cart {
+        transform: translateX(-100%);
+        position: absolute;
+        background: #07ee13;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        display: none;
+        font-weight: bolder;
+
+    }
+
+    .btn .buy {
+        z-index: 3;
+        font-weight: bolder;
+    }
+
+    .btn:hover .price {
+        transform: translateX(-110%);
+        display: none;
+    }
+
+    .btn:hover .shopping-cart {
+        transform: translateX(-80%);
+        display: block;
+        width: 15px;
+        height: 36px;
+        padding: 0px 30px 0px 0px;
+        border-radius: 12%;
+
+    }
+
+    #container_s .info li{
+        list-style-type: none;
+        max-width: 80%;
+        }
+
+    #container_s .info li:hover{
+        font-weight: bold;
+        position: relative;
+       display: block;
+       position: relative;
+       font-size: large;
+
+       }
+
+
+</style>
+
+
+{% endblock %}
+
+
+{% block content %}
+<!--  <h1>Search Results</h1>
+    <form method="GET" action="{% url 'search' %}">
+        <input type="text" name="q" value="{{ query }}" />
+        <button type="submit">Search</button>
+    </form>
+-->
+<h2 class="container" style="margin-top: 100px;">Results for "{{ query }}"</h2>
+<ul>
+    {% if results %}
+    {% for product in results %}
+
+    <div id="container_s">
+        <div class="product-image">
+            <img src="{{product.image.url}}" alt="">
+        </div>
+        <div class="info">
+            <p>
+                <li>{{product.f1}}</li>
+                <li>{{product.f2}}</li>
+                <li>{{product.f3}}</li>
+                <li>{{product.f4}}</li>
+                <li>{{product.f5}}</li>
+    
+            </p>
+        </div>
+
+    
+
+
+        <div class="product-detail">
+            <h1> {{ product.name }}</h1>
+            <h3 style="color: #000;">Description :</h3>
+            <p style="display: flex;font-size:medium;">{{product.description}}</p>
+
+            <div class="control">
+                <button class="btn">
+                    <span class="price">&#8377;{{ product.price }} <strike style="color: grey;">&#8377;{{ product.sprice}}</strike>
+                    </span>
+                    <span class="shopping-cart"><i>&#128722;</i></span>
+                    <span >
+                        <a href="{% url 'product_detail' product_id=product.id %}" class="buy">Get now
+                            </a>
+                            
+                    </span>
+
+
+
+
+                    
+                </button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    {% endfor %}
+    {% else %}
+    <li>No results found</li>
+
+    {% endif %}
+
+
+
+
+    <!-- </ul>
+    Similar Product 
+    <h2>Similar Products</h2>
+    <ul>
+        {% if similar_results %}
+            {% for product in similar_results %}
+                <li>{{ product.name }}</li>
+            {% endfor %}
+        {% else %}
+            <li>No similar products found</li>
+        {% endif %}
+    </ul>
+-->
+
+    {% endblock %}

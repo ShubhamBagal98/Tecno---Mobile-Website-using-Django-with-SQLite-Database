@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+<!-- products.html -->
+{% block title %}
+Store
+{% endblock %}
+
+{% block style %}
+
+
+<style>
+  .product-stars {
+    color: #FFA500;
+  }
+
+  .product-card img {
+    height: 250px;
+
+  }
+
+  button:hover {
+    opacity: 0.5;
+  }
+
+  .product {
+    border: none;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!--  message
+-->
+        
+<!-- Product-->
+    
+<div class="container-fluid" style="margin-top: 100px;">
+    
+  <div class="row">
+<!--filters-->
+    <div class="col-lg-3 mx-auto ">
+      <div class="list-group">
+
+        <a href="{% url 'index' %}" class="btn btn-primary">All</a>
+        {% for brand in brands %}
+        <a href="/?brand={{brand.id}}" class="list-group-item list-group-item-action ">{{brand.name}}</a>
+        {% endfor %}
+         </div>
+
+    </div>
+
+
+
+    <!--all product-->
+    <div id="products" class="col-lg-8 mx-auto">
+      <div class="row">
+        {% for product in products %}
+        <button type="button" class=" col-md-3 m-4"  style="border: none;" data-bs-toggle="modal"
+          data-bs-target="#{{ product.id}}">
+          <a href="{% url 'product_detail' product_id=product.id %}" >
+            <div class="product-card">
+              <img src="{{product.image.url}}" class="mr-3 mb-2 product-img" alt="Product Image">
+              <div class="container media-body">
+                <h5 class="mt-0 product-title">       
+                   {{ product.name }}
+                </h5>
+                <p style="color: black;">{{ product.f1}},
+                  {{ product.f3}},
+                  {{ product.f5}}</p>
+                
+                <p class="price">&#8377;{{ product.price }} <strike style="color: grey;">&#8377;{{ product.sprice }}</strike></p>
+              </div>
+            </div>
+          </a>
+        </button>
+
+
+
+        <!--Model-->
+        <!-- Button trigger modal -->
+
+        <!-- Modal -->
+
+
+
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #F6F6F6;
+            
+        }
+
+       
+        </style>
+</head>
+
+<body >
+    {% load static %}
+    {% load cart %}
+
+    <div class="row">
+        <table>
+           <thead>
+            <tr style="background-color: #0d1033; color: #F6F6F6;padding-top: 3mm;">
+                <th><h1 class="text-white" style="font-size: 7mm ;">TECNO  </h1>
+                 </th>
+                <th>  <h1 style="font-size: large;">  Date: {{order.date}}</h1></th>
+            </tr>
+        
+           </thead>
+        </table>
+    </div>
+    
+    <div class="bill_no" style="text-align: center;">
+            <h1>Invoice/Bill No.: {{ order.id }}</h1>
+    </div>
+
+    <div class="b_table">
+        <table style="text-align: center;">
+
+            <thead>
+                <tr>
+                
+                    <th><h2> Customer Username  </h2>  </th>
+                    <th><h2>  Customer Email    </h2></th>
+                    <th><h2>   Customer Phone Number  </h2> </th>
+                    <th><h2>   Customer Address </h2>  </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td><h3> {{order.customer.username}}</h3>   </td>
+                    <td><h3> {{order.customer.email}}   </h3>    </td>
+                    <td><h3>  {{ order.phone }}         </h3>     </td>
+                    <td><h3>  {{ order.address }}       </h3>  </td>
+
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+<br>
+        <table>
+            <tr>
+                <th style="text-align: right;"><h1>NAME :</h1>
+                </th>
+           
+                <th><h1 style="text-align: left;padding-left: 3mm;"> {{ order.name }} </h1>
+    
+                </th>
+            </tr>
+        </table>
+    
+ 
+    <div class="body-section">
+        <h3 class="heading" style="text-align: center;"> Ordered Items</h3>
+        <br>
+        <table style="text-align: center;border: 1px solid black;">
+            <thead>
+                <tr style="padding-top: 1mm;">
+                    <th><h1>Product</h1></th>
+                    <th><h1>Price</h1></th>
+                    <th><h1>Quantity</h1></th>
+                    <th><h1>Total</h1></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="padding-top: 1mm;">
+                    <td> <h2>{{order.product.name}}</h2></td>
+                    <td> <h2>{{order.price}}</h2></td>
+                    <td> <h2>{{order.oquantity}}</h2></td>
+                    <td> <h2>{{order.oquantity|multiply:order.price}}</h2></td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr style="padding-top: 1mm;">
+                    <td colspan="3" class="text-right"><h1>Total Price</h1></td>
+                    <td> <h1>{{order.oquantity|multiply:order.price}}</h1></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h3 class="heading">Payment Status: Paid</h3>
+        <h3 class="heading">Payment Mode: Cash on Delivery</h3>
+    </div>
+
+    
+</body>
+
+</html>
